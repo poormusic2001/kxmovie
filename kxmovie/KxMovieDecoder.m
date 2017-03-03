@@ -1395,12 +1395,12 @@ static int interrupt_callback(void *ctx);
                     
                     if (!_disableDeinterlacing &&
                         _videoFrame->interlaced_frame) {
-
-                        avpicture_deinterlace((AVPicture*)_videoFrame,
+                        return nil;
+                        /*avpicture_deinterlace((AVPicture*)_videoFrame,
                                               (AVPicture*)_videoFrame,
                                               _videoCodecCtx->pix_fmt,
                                               _videoCodecCtx->width,
-                                              _videoCodecCtx->height);
+                                              _videoCodecCtx->height);*/			    
                     }
                     
                     KxVideoFrame *frame = [self handleVideoFrame];
