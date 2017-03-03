@@ -826,8 +826,8 @@ static int interrupt_callback(void *ctx);
 - (kxMovieError) openVideoStream: (NSInteger) videoStream
 {    
     // get a pointer to the codec context for the video stream
-    AVCodecContext *codecCtx = _formatCtx->streams[videoStream]->codec;
-    
+    AVCodec *pCodec = avcodec_find_decoder(_formatCtx->streams[videoStream]->codecpar->codec_id);
+    AVCodecContext *codecCtx = avcodec_alloc_context3(pCodec);
     // find the decoder for the video stream
     AVCodec *codec = avcodec_find_decoder(codecCtx->codec_id);
     if (!codec)
@@ -885,7 +885,8 @@ static int interrupt_callback(void *ctx);
 
 - (kxMovieError) openAudioStream: (NSInteger) audioStream
 {   
-    AVCodecContext *codecCtx = _formatCtx->streams[audioStream]->codec;
+    AVCodec *pCodec = avcodec_find_decoder(_formatCtx->streams[audioStream]->codecpar->codec_id);
+    AVCodecContext *codecCtx = avcodec_alloc_context3(pCodec);
     SwrContext *swrContext = NULL;
                    
     AVCodec *codec = avcodec_find_decoder(codecCtx->codec_id);
